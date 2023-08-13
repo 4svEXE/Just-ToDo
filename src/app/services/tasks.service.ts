@@ -10,29 +10,29 @@ export class TasksService {
   private readonly LSTableName = "tasks";
   tasks!: TaskInterface[];
 
-  ///////////////////////////////////////
-  private tasksData: any[] = [];
+  private tasksData: TaskInterface[] = [];
 
-  private tasksDataObservable: Observable<any[]> = new Observable(
+  private tasksDataObservable: Observable<TaskInterface[]> = new Observable(
     (observer) => {
       observer.next(this.tasksData);
     }
   );
-  private dataSubject: BehaviorSubject<any[]> = new BehaviorSubject(
+  private dataSubject: BehaviorSubject<TaskInterface[]> = new BehaviorSubject(
     this.tasksData
   );
 
-  getDataObservable(): Observable<any[]> {
+  getDataObservable(): Observable<TaskInterface[]> {
     return this.tasksDataObservable;
   }
 
-  addData(newData: any): void {
+  addData(newData: TaskInterface[]): void {
     this.tasksData = newData;
     this.dataSubject.next(this.tasksData);
   }
-  ///////////////////////////////////////
 
-  constructor() {}
+  constructor() {
+    this.addData(this.getTasks());
+  }
 
   getTasks() {
     let Tasks = localStorage.getItem(this.LSTableName) || "[]";
@@ -42,6 +42,7 @@ export class TasksService {
   setTasks(tasks: TaskInterface[]) {
     const Tasks = JSON.stringify(tasks);
     localStorage.setItem(this.LSTableName, Tasks);
+    this.addData(this.getTasks());
   }
 
   setTask(task: TaskInterface) {
@@ -63,7 +64,7 @@ export class TasksService {
   toggleCheckbox(id: string) {
     let Tasks = this.getTasks();
 
-    Tasks = Tasks.map((task: TaskInterface) => {
+    Tasks.map((task: TaskInterface) => {
       if (task.id === id) {
         task.isChecked = !task.isChecked;
       }

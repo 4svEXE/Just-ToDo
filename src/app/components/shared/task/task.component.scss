@@ -3,7 +3,7 @@ $text: #414856;
 $check: #4f29f0;
 $disabled: #c3c8de;
 $width: 100%;
-$height: auto   ;
+$height: auto;
 $border-radius: 10px;
 
 #checklist {
@@ -24,6 +24,28 @@ $border-radius: 10px;
   padding: 6px 12px;
   align-items: start;
   justify-content: strat;
+
+  &.deleted {
+    background-color: #AEE2FF;
+    animation: slide-out-right .7s ease forwards;
+
+    @keyframes slide-out-right {
+      0% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      99% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      100% {
+        display: none !important;
+        opacity: 0;
+        height: 0;
+        padding: 0;
+      }
+    }
+  }
 
   .color-box {
     width: 4px;

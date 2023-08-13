@@ -12,10 +12,13 @@ export class TaskComponent {
   @Input() taskId: string = "001";
   @Input() checked: boolean = false;
 
+  isDeleted = false
+
   constructor(private tasksService:TasksService){}
 
   deleteTask() {
     this.tasksService.deleteTask(this.taskId);
+    this.isDeleted = true;
   }
 
   toggleCheckbox() {
