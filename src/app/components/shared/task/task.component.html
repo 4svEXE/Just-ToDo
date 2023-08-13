@@ -1,0 +1,13 @@
+<div id="checklist" class="w-full flex flex-col">
+  <div class="flex items-center">
+    <div class="color-box" (style)="'background-color:' + color"></div>
+    <input
+      [(ngModel)]="checked"
+      type="checkbox"
+      id="{{taskId}}"
+      (click)="toggleCheckbox()"
+    />
+    <label for="{{taskId}}">{{title}}</label>
+    <button (click)="deleteTask()">×</button>
+  </div>
+</div>

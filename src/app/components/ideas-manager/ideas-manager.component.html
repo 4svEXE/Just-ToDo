@@ -1,0 +1,55 @@
+<div class="flex flex-col w-screen min-h-screen">
+  <header class="grid grid-cols-3">
+    <div class="flex-centered">
+      <span>20/30</span>
+    </div>
+
+    <div class="flex-centered">
+      <span>Ideas</span>
+    </div>
+
+    <div class="flex-centered">
+      <span>24.08.2023</span>
+    </div>
+  </header>
+
+  <div class="flex flex-col">
+    <div id="checklist" class="w-full flex flex-col">
+      <ng-container *ngIf="tasks.length > 0">
+        <app-task
+          *ngFor="let task of tasks"
+          title="{{task.title}}"
+          taskId="{{task.id}}"
+          color="{{task.color}}"
+          [checked]="task.isChecked"
+        ></app-task>
+      </ng-container>
+
+      <div class="text-2xs text-red-500">NO DATA</div>
+    </div>
+
+    <form [formGroup]="form" class="w-full flex px-1">
+      <div class="add-task-form w-full flex">
+        <div class="custom-select">
+          <select
+            id="color-select"
+            [ngStyle]="{'background-color': selectedColor}"
+            formControlName="color"
+            (change)=" selectColorHandler()"
+          >
+            <option
+              *ngFor="let color of colors"
+              value="{{color}}"
+              [ngStyle]="{'background-color': color}"
+            >
+              ★
+            </option>
+          </select>
+        </div>
+
+        <input type="text" formControlName="title" />
+        <button class="primoty-button" (click)="onSubmit()">add</button>
+      </div>
+    </form>
+  </div>
+</div>
